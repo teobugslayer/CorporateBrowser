@@ -24,6 +24,8 @@ namespace CorporateBrowser
         public MainWindow()
         {
             InitializeComponent();
+
+			this.DataContext = new MainWindowPresenter();
         }
     }
 }

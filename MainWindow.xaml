@@ -17,8 +17,65 @@
     </Window.Resources>
 
     <Grid>
-        <DataGrid>
-            
-        </DataGrid> 
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		
+		<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+			<TextBlock Text="Find: " />
+			<TextBox MinWidth="200" />
+		</StackPanel>
+
+		<DataGrid Grid.Row="1" ItemsSource="{Binding Users}" AutoGenerateColumns="False">
+			<DataGrid.GroupStyle>
+				<GroupStyle>
+					<GroupStyle.HeaderTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding Path=Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</GroupStyle.HeaderTemplate>
+					<GroupStyle.ContainerStyle>
+						<Style TargetType="{x:Type GroupItem}">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="{x:Type GroupItem}">
+										<Expander>
+											<Expander.Header>
+												<StackPanel Orientation="Horizontal">
+													<TextBlock Text="{Binding Path=Name}" />
+													<TextBlock Text="    " />
+													<TextBlock Text="{Binding Path=ItemCount}"/>
+													<TextBlock Text=" " />
+													<TextBlock Text="People"/>
+												</StackPanel>
+											</Expander.Header>
+											<ItemsPresenter />
+										</Expander>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</GroupStyle.ContainerStyle>
+				</GroupStyle>
+			</DataGrid.GroupStyle>
+
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="SizeToCells" IsReadOnly="True" />
+				<DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="SizeToCells" IsReadOnly="True" />
+				<DataGridHyperlinkColumn Header="Mail" Binding="{Binding Mail}" Width="SizeToCells" IsReadOnly="True" />
+				<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="SizeToCells" IsReadOnly="True" />
+				
+				<DataGridTemplateColumn Header="Image" MaxWidth="96" IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Image Source="{Binding Photo}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid> 
     </Grid>
 </Controls:MetroWindow>
